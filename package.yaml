@@ -1,0 +1,43 @@
+name: subtlecolorbot
+version: '0.0.0'
+category: Web
+synopsis: subtlecolorbot
+description: Generate a slightly gradient image once an hour
+maintainer: Joe Vargas
+license: BSD3
+extra-source-files:
+- package.yaml
+- README.md
+ghc-options: -Wall
+default-extensions:
+- LambdaCase
+- OverloadedStrings
+- TupleSections
+- RecordWildCards
+library:
+  dependencies:
+  - aeson
+  - base >= 4.7 && < 5
+  - JuicyPixels
+  - MonadRandom
+  - twitter-conduit
+  - text
+  - bytestring
+  - lens
+  - case-insensitive
+  - http-conduit
+  - network-uri
+  - containers
+  - http-client
+  source-dirs: library
+executables:
+  subtlecolorbot:
+    dependencies:
+    - base
+    - subtlecolorbot
+    ghc-options:
+    - -rtsopts
+    - -threaded
+    - -with-rtsopts=-N
+    main: Main.hs
+    source-dirs: executable

@@ -1,0 +1,53 @@
+-- This file has been generated from package.yaml by hpack version 0.17.1.
+--
+-- see: https://github.com/sol/hpack
+
+name:           subtlecolorbot
+version:        0.0.0
+synopsis:       subtlecolorbot
+description:    Generate a slightly gradient image once an hour
+category:       Web
+maintainer:     Joe Vargas
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+cabal-version:  >= 1.10
+
+extra-source-files:
+    package.yaml
+    README.md
+
+library
+  hs-source-dirs:
+      library
+  default-extensions: LambdaCase OverloadedStrings TupleSections RecordWildCards
+  ghc-options: -Wall
+  build-depends:
+      aeson
+    , base >= 4.7 && < 5
+    , JuicyPixels
+    , MonadRandom
+    , twitter-conduit
+    , text
+    , bytestring
+    , lens
+    , case-insensitive
+    , http-conduit
+    , network-uri
+    , containers
+    , http-client
+  exposed-modules:
+      SubtleColorBot
+      SubtleColorBot.Env
+  default-language: Haskell2010
+
+executable subtlecolorbot
+  main-is: Main.hs
+  hs-source-dirs:
+      executable
+  default-extensions: LambdaCase OverloadedStrings TupleSections RecordWildCards
+  ghc-options: -Wall -rtsopts -threaded -with-rtsopts=-N
+  build-depends:
+      base
+    , subtlecolorbot
+  default-language: Haskell2010
