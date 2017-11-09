@@ -108,7 +108,10 @@ randomGenerator color0 color1 = do
   return $ gens !! (index `mod` length gens)
 
 hexColor :: PixelRGB8 -> String
-hexColor (PixelRGB8 r g b) = "#" ++ showHex r "" ++ showHex g "" ++ showHex b ""
+hexColor (PixelRGB8 r g b) = "#" ++ zero (showHex r "") ++ zero (showHex g "") ++ zero (showHex b "")
+  where
+    zero [x,y] = [x,y]
+    zero [x] = '0':[x]
 
 hexColorStatus :: PixelRGB8 -> PixelRGB8 -> String
 hexColorStatus color0 color1 = hexColor color0 ++ " / " ++ hexColor color1
