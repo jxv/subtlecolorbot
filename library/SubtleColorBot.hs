@@ -139,7 +139,7 @@ main = do
   twInfo <- getTWInfoFromEnv
   mgr <- newManager tlsManagerSettings
   forever $ do
-    (color0, color1) <- subtleColors 100
+    (color0, color1) <- subtleColors 64
     let status = hexColorStatus color0 color1
     generator <- randomGenerator color0 color1
     let image = generateImage generator width height
