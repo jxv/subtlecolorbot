@@ -150,6 +150,7 @@ main = do
   forever $ do
     (color0, color1) <- subtleColors diff
     let status = hexColorStatus color0 color1
+    putStrLn $ "Status: " ++ status
     generator <- randomGenerator color0 color1
     let image = generateImage generator width height
     let content = encodePng image
