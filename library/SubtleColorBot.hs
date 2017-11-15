@@ -3,17 +3,13 @@ module SubtleColorBot
   ) where
 
 import qualified Data.Text as T
-import Control.Concurrent (threadDelay, forkIO)
+import Control.Concurrent (threadDelay)
 import Control.Monad (forever)
 import Control.Monad.Random
 import Codec.Picture
 import Numeric
 import Web.Twitter.Conduit
 import Network.HTTP.Client (RequestBody(..))
-import Network.Wai (responseLBS, Application)
-import Network.Wai.Handler.Warp (run)
-import Network.HTTP.Types (status200)
-import Network.HTTP.Types.Header (hContentType)
 
 import SubtleColorBot.Env
 
@@ -145,13 +141,10 @@ delaySeconds secs = threadDelay (1000000 * secs)
 main :: IO ()
 main = do
   hSetBuffering stdout LineBuffering
-  port <- read <$> getEnv "PORT"
   interval <- read <$> getEnv "MINUTE_INTERVAL"
   diff <- read <$> getEnv "COLOR_DIFF"
-  print ("PORT" :: String, port)
   print ("MINUTE_INTERVAL" :: String, interval)
   print ("COLOR_DIFF" :: String, diff)
-  _ <- forkIO $ web port -- Satisfied heroku or be killed
   twInfo <- getTWInfoFromEnv
   mgr <- newManager tlsManagerSettings
   forever $ do
@@ -164,11 +157,3 @@ main = do
     res <- call twInfo mgr $ updateWithMedia (T.pack status) (MediaRequestBody "color.png" $ RequestBodyLBS content)
     print res
     delayMinutes interval
-
--- Satisfy heroku or be killed
-
-web :: Int -> IO ()
-web port = run port app
-  where
-    app :: Application
-    app req f = f $ responseLBS status200 [(hContentType, "text/plain")] "Hello world!"

@@ -36,9 +36,6 @@ library
     , network-uri
     , containers
     , http-client
-    , http-types
-    , warp
-    , wai
   exposed-modules:
       SubtleColorBot
       SubtleColorBot.Env

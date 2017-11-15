@@ -29,9 +29,6 @@ library:
   - network-uri
   - containers
   - http-client
-  - http-types
-  - warp
-  - wai
   source-dirs: library
 executables:
   subtlecolorbot:

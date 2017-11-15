@@ -1,1 +1,1 @@
-web: /app/.local/bin/subtlecolorbot
+worker: /app/.local/bin/subtlecolorbot
