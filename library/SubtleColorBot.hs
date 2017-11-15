@@ -14,6 +14,7 @@ import Network.HTTP.Client (RequestBody(..))
 import SubtleColorBot.Env
 
 import System.Environment
+import System.IO
 
 -- Width enough using golden ratio
 width, height :: Num a => a
@@ -139,8 +140,11 @@ delaySeconds secs = threadDelay (1000000 * secs)
 
 main :: IO ()
 main = do
+  hSetBuffering stdout LineBuffering
   interval <- read <$> getEnv "MINUTE_INTERVAL"
   diff <- read <$> getEnv "COLOR_DIFF"
+  print ("MINUTE_INTERVAL" :: String, interval)
+  print ("COLOR_DIFF" :: String, diff)
   twInfo <- getTWInfoFromEnv
   mgr <- newManager tlsManagerSettings
   forever $ do
