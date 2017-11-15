@@ -13,6 +13,8 @@ import Network.HTTP.Client (RequestBody(..))
 
 import SubtleColorBot.Env
 
+import System.Environment
+
 -- Width enough using golden ratio
 width, height :: Num a => a
 width = 512
@@ -112,6 +114,7 @@ hexColor (PixelRGB8 r g b) = "#" ++ zero (showHex r "") ++ zero (showHex g "") +
   where
     zero [x,y] = [x,y]
     zero [x] = '0':[x]
+    zero _ = error "too many numbers"
 
 hexColorStatus :: PixelRGB8 -> PixelRGB8 -> String
 hexColorStatus color0 color1 = hexColor color0 ++ " / " ++ hexColor color1
@@ -136,6 +139,7 @@ delaySeconds secs = threadDelay (1000000 * secs)
 
 main :: IO ()
 main = do
+  interval <- read <$> getEnv "MINUTE_INTERVAL"
   twInfo <- getTWInfoFromEnv
   mgr <- newManager tlsManagerSettings
   forever $ do
@@ -146,4 +150,4 @@ main = do
     let content = encodePng image
     res <- call twInfo mgr $ updateWithMedia (T.pack status) (MediaRequestBody "color.png" $ RequestBodyLBS content)
     print res
-    delayMinutes 60
+    delayMinutes interval
