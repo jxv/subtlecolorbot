@@ -140,10 +140,11 @@ delaySeconds secs = threadDelay (1000000 * secs)
 main :: IO ()
 main = do
   interval <- read <$> getEnv "MINUTE_INTERVAL"
+  diff <- read <$> getEnv "COLOR_DIFF"
   twInfo <- getTWInfoFromEnv
   mgr <- newManager tlsManagerSettings
   forever $ do
-    (color0, color1) <- subtleColors 88
+    (color0, color1) <- subtleColors diff
     let status = hexColorStatus color0 color1
     generator <- randomGenerator color0 color1
     let image = generateImage generator width height
